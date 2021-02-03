@@ -37,22 +37,24 @@ class Graph {
 
   breadthFirstTraversal(startingVertex) {
     let answer = [];
-    for(let key in this.adjList){
-      if(!(answer.includes(key))) {
-        answer.push(key);
+    let queue = [startingVertex];
+    let visited = new Set();
+    while(queue.length) {
+      let current = queue.shift();
+      if(!(visited.has(current))) {
+        answer.push(current);
+        visited.add(current);
       }
-      for(let i = 0; i < this.adjList[key].length; i++) {
-        if(!(answer.includes(this.adjList[key][i]))) {
-          answer.push(this.adjList[key][i]);
-        }
-      }
+      let nonVisited = this.adjList[current].filter(val => {  // [ 'a', 'c', 'e' ]
+        return !(visited.has(val)) && !(queue.includes(val))
+      })
+      queue.push(...nonVisited);
     }
-    console.log(answer);
     return answer;
   }
 
   depthFirstTraversalIterative(startingVertex) {
-    // Code goes here ...
+    
   }
 
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
@@ -60,19 +62,20 @@ class Graph {
   }
 
 }
-// const edges =
-// [['a', 'b'],
-// ['a', 'c'],
-// ['a', 'd'],
-// ['d', 'g'],
-// ['b', 'c'],
-// ['b', 'e'],
-// ['c', 'f'],
-// ['c', 'g'],
-// ['f', 'g'],
-// ['h']]
-// let g = new Graph();
-// console.log(g.buildGraph(edges));
+const edges =
+[['a', 'b'],
+['a', 'c'],
+['a', 'd'],
+['d', 'g'],
+['b', 'c'],
+['b', 'e'],
+['c', 'f'],
+['c', 'g'],
+['f', 'g'],
+['h']]
+let g = new Graph();
+g.buildGraph(edges);
+console.log(g.breadthFirstTraversal('a'));
 
 module.exports = {
   Graph

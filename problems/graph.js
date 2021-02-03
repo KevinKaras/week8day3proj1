@@ -73,8 +73,62 @@ class Graph {
   }
 
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
-    
+    if(visited.has(startingVertex)){
+      return;
+    }
+    visited.add(startingVertex);
+    vertices.push(startingVertex);
+    this.adjList[startingVertex].forEach(el =>{
+      this.depthFirstTraversalRecursive(el, visited, vertices)
+    })
+    return vertices;
   }
+  
+        // SV: a
+        // visited: (a, )
+        // vertices: [a, ]
+        // HfE : [ b., c, d ]
+        // [ a, d, g, f, c, b, e ]
+
+        // SV: b
+        // visited: (a, b )
+        // vertices: [a, b ]
+        // HfE : [ a, c., e ]
+        // [ a, d, g, f, c, b, e ]
+
+        // SV: e
+        // visited: (a, b, c, f, g, d, e )
+        // vertices: [a, b, c, f, g, d, e]
+        // HfE : [ b ]                   
+        // [ a, d, g, f, c, b, e ]
+
+
+
+
+        // SV: c
+        // visited: (a, b, c )
+        // vertices: [a, b, c ]
+        // HfE : [ a, f., g ]
+        // [ a, d, g, f, c, b, e ]       **
+
+        // SV: f
+        // visited: (a, b, c, f )
+        // vertices: [a, b, c, f ]
+        // HfE : [ c, g. ]
+        // [ a, d, g, f, c, b, e ]     *
+
+        // SV: g
+        // visited: (a, b, c, f, g )
+        // vertices: [a, b, c, f, g]
+        // HfE : [ d., c, f ]
+        // [ a, d, g, f, c, b, e ]     *
+
+        // SV: d
+        // visited: (a, b, c, f, g, d )
+        // vertices: [a, b, c, f, g, d]
+        // HfE : [ a, g ]                   // failure;
+        // [ a, d, g, f, c, b, e ]       *
+
 
 }
 const edges =

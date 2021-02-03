@@ -54,11 +54,26 @@ class Graph {
   }
 
   depthFirstTraversalIterative(startingVertex) {
-    
+    let answer = [];
+    let stack = [startingVertex];     // [a, c, e]
+    let visited = new Set();
+    while(stack.length) {
+      let current = stack.pop();
+      if(!(visited.has(current))) {
+        answer.push(current);
+        visited.add(current);
+      }
+      let nonVisited = this.adjList[current].filter(val => {  // [ 'a', 'c', 'e' ]
+        return !(visited.has(val)) && !(stack.includes(val))
+      })
+      stack.push(...nonVisited);
+    }
+    console.log(answer)
+    return answer;
   }
 
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
-    // Code goes here ...
+    
   }
 
 }
